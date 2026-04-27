@@ -11,4 +11,4 @@ A proposta é um site que você possa gerenciar filmes, adicionando e removendo 
 
 Abra em: http://localhost:3000
 Ou
-Site:
+Site: https://gerenciador-filmes-kappa.vercel.app
