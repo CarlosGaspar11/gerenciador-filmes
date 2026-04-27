@@ -8,9 +8,10 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface Props {
   filmesIniciais: Filme[];
+  logado: boolean;
 }
 
-export function ClientPage({ filmesIniciais }: Props) {
+export function ClientPage({ filmesIniciais, logado }: Props) {
   const [filmes, setFilmes] = useState<Filme[]>(filmesIniciais);
   const [resultados, setResultados] = useState<Filme[]>([]);
   const [mensagem, setMensagem] = useState("");
@@ -28,6 +29,7 @@ export function ClientPage({ filmesIniciais }: Props) {
   };
 
   const handleSalvar = async (filme: Filme) => {
+    if (!logado) return setMensagem("Faça login para salvar filmes!");
     const res = await fetch("/api/filmes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,11 +67,17 @@ export function ClientPage({ filmesIniciais }: Props) {
 
       <section>
         <h2 className="text-xl font-semibold mb-4">Minha Lista</h2>
-        <MovieList
-          filmes={filmes}
-          onRemove={handleRemove}
-          onToggle={handleToggle}
-        />
+        {!logado ? (
+          <p className="text-muted-foreground text-sm">
+            Faça login para ver sua lista de filmes.
+          </p>
+        ) : (
+          <MovieList
+            filmes={filmes}
+            onRemove={handleRemove}
+            onToggle={handleToggle}
+          />
+        )}
       </section>
     </div>
   );

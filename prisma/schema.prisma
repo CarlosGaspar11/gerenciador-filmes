@@ -16,4 +16,5 @@ model Filme {
   plot    String
   status  String @default("pendente")
   savedAt String
+  userId  String
 }
