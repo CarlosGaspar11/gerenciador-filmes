@@ -5,6 +5,7 @@ import { buscarDetalhes } from "@/lib/omdb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import Image from "next/image";
 
 interface Props {
   filmes: Filme[];
@@ -37,11 +38,15 @@ export function MovieResult({ filmes, onSalvar }: Props) {
               {loadingId === filme.id ? (
                 <Skeleton className="w-full aspect-[2/3]" />
               ) : (
-                <img
-                  src={filme.poster}
-                  alt={filme.title}
-                  className="w-full object-cover aspect-[2/3]"
-                />
+                <div className="relative w-full aspect-[2/3]">
+                  <Image
+                    src={filme.poster}
+                    alt={filme.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 50vw, 20vw"
+                  />
+                </div>
               )}
               <CardContent className="p-2 flex flex-col gap-2">
                 <p className="text-xs font-semibold truncate">{filme.title}</p>
@@ -72,11 +77,15 @@ export function MovieResult({ filmes, onSalvar }: Props) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex gap-4 p-4">
-              <img
-                src={selecionado.poster}
-                alt={selecionado.title}
-                className="h-48 w-32 object-cover rounded-lg shrink-0"
-              />
+              <div className="relative h-48 w-32 shrink-0">
+                <Image
+                  src={selecionado.poster}
+                  alt={selecionado.title}
+                  fill
+                  className="object-cover rounded-lg"
+                  sizes="128px"
+                />
+              </div>
               <div className="flex flex-col gap-2">
                 <h3 className="text-lg font-bold">{selecionado.title}</h3>
                 <p className="text-sm text-muted-foreground">

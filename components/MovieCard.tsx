@@ -4,6 +4,7 @@ import { Filme } from "@/lib/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface Props {
   filme: Filme;
@@ -17,12 +18,18 @@ export function MovieCard({ filme, onRemove, onToggle }: Props) {
   return (
     <>
       <Card className="flex flex-col">
-        <img
-          src={filme.poster}
-          alt={filme.title}
-          className="w-full object-cover rounded-t-lg aspect-[2/3] cursor-pointer hover:-translate-y-1 transition-transform duration-200"
+        <div
+          className="relative w-full aspect-[2/3] cursor-pointer hover:-translate-y-1 transition-transform duration-200"
           onClick={() => setModalAberto(true)}
-        />
+        >
+          <Image
+            src={filme.poster}
+            alt={filme.title}
+            fill
+            className="object-cover rounded-t-lg"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </div>
         <CardContent className="flex flex-col flex-1 gap-2 p-3">
           <h3 className="font-semibold text-sm leading-tight">{filme.title}</h3>
           <p className="text-xs text-muted-foreground">
@@ -67,11 +74,15 @@ export function MovieCard({ filme, onRemove, onToggle }: Props) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex gap-4 p-4">
-              <img
-                src={filme.poster}
-                alt={filme.title}
-                className="h-48 w-32 object-cover rounded-lg shrink-0"
-              />
+              <div className="relative h-48 w-32 shrink-0">
+                <Image
+                  src={filme.poster}
+                  alt={filme.title}
+                  fill
+                  className="object-cover rounded-lg"
+                  sizes="128px"
+                />
+              </div>
               <div className="flex flex-col gap-2">
                 <h3 className="text-lg font-bold">{filme.title}</h3>
                 <p className="text-sm text-muted-foreground">{filme.year}</p>
